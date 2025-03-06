@@ -1,0 +1,17 @@
+# Java & IntelliJ 관련 제외 파일
+/.idea
+*.iml
+/out
+/build
+/target
+.gradle
+.classpath
+.project
+.settings
+*.log
+*.DS_Store
+
+# Node.js 관련 제외 파일
+/frontend/node_modules
+/frontend/.next
+/frontend/.env.local
