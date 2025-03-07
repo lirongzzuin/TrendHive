@@ -3,11 +3,14 @@ package com.trendhive.backend.service;
 import com.trendhive.backend.domain.Comment;
 import com.trendhive.backend.domain.Trend;
 import com.trendhive.backend.domain.User;
+import com.trendhive.backend.dto.CommentResponseDTO;
 import com.trendhive.backend.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +27,9 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
-    public List<Comment> getCommentsByTrend(Trend trend) {
-        return commentRepository.findByTrend(trend);
+    public List<CommentResponseDTO> getCommentsByTrend(Trend trend) {
+        return commentRepository.findByTrend(trend).stream()
+                .map(CommentResponseDTO::new)
+                .collect(Collectors.toList());
     }
 }

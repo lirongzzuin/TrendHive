@@ -2,6 +2,7 @@ package com.trendhive.backend.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -10,21 +11,23 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "trends")
 public class Trend {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String title;
-
-    @Column(nullable = false, length = 1000)
     private String description;
+    private String category; // ✅ 추가
 
-    @Column(nullable = false)
-    private String sourceUrl;
+    @ManyToOne
+    @JoinColumn(name = "created_by") // ✅ 추가
+    private User createdBy;
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
 }
