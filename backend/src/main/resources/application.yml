@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/trendhive?serverTimezone=UTC&characterEncoding=UTF-8
+    username: trendhive_user
+    password: yourpassword
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+
+  redis:
+    host: localhost
+    port: 6379
+
+jwt:
+  secret: your_jwt_secret
+
+#
