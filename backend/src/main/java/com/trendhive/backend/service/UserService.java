@@ -5,6 +5,8 @@ import com.trendhive.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -17,10 +19,12 @@ public class UserService {
         User user = User.builder()
                 .username(username)
                 .email(email)
-                .password(password) // 나중에 비밀번호 암호화 필요
+                .password(password) // 비밀번호 암호화는 나중에 추가
+                .createdAt(LocalDateTime.now()) // createdAt을 명시적으로 설정
                 .build();
         return userRepository.save(user);
     }
+
 
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
