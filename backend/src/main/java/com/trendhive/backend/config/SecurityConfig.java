@@ -24,6 +24,9 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/users/login", "/api/users/register").permitAll()
+                        // 모든 트렌드 정보 조회는 개발 또는 보기 포함인데
+                        // 보통 방해되는 사이나 사연 보안 정체 비만
+                        .requestMatchers("/api/trends/all").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
