@@ -12,7 +12,10 @@ export default function Dashboard() {
       return;
     }
 
-    fetch("http://localhost:8080/api/trends", {
+    // 클래스가 최종 내어나는 모든 트렌드 데이터를 얻기 위해
+    // backend 에서 객체의 경로가 /api/trends/all로 정의되어 있으며
+    // 방해되는 오픈 정확할 수 있도록 수정
+    fetch("http://localhost:8080/api/trends/all", {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
