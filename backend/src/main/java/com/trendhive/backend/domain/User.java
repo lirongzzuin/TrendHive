@@ -32,4 +32,13 @@ public class User {
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
     }
+
+    public Comment comment(Trend trend, String content) {
+        return Comment.builder()
+                .user(this)
+                .trend(trend)
+                .content(content)
+                .build();
+    }
+
 }
