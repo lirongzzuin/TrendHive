@@ -5,9 +5,9 @@ import com.trendhive.backend.domain.User;
 import com.trendhive.backend.dto.TrendResponseDTO;
 import com.trendhive.backend.repository.TrendRepository;
 import com.trendhive.backend.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,7 +33,7 @@ public class TrendService {
                 .title(title)
                 .description(description)
                 .category(category)
-                .createdBy(user) // 🔥 User 객체 직접 설정
+                .createdBy(user)
                 .build();
 
         trendRepository.save(trend);
