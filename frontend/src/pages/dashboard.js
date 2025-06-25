@@ -12,7 +12,7 @@ export default function Dashboard() {
       return;
     }
 
-    fetch("http://localhost:8080/api/trends", {
+    fetch("http://localhost:8080/api/trends/all", {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())

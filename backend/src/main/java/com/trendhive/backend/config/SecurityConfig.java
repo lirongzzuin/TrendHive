@@ -24,6 +24,8 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/users/login", "/api/users/register").permitAll()
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/trends/**").permitAll()
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/comments/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

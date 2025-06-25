@@ -42,7 +42,7 @@ public class TrendController {
     /**
      * 🔹 모든 트렌드 조회 (공개 API)
      */
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<TrendResponseDTO>> getAllTrends() {
         return ResponseEntity.ok(trendService.getAllTrends());
     }

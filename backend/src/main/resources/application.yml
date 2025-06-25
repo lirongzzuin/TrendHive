@@ -20,6 +20,4 @@ spring:
     port: 6379
 
 jwt:
-  secret: your_jwt_secret
-
-#
+  secret: testsecretkeyforjwt

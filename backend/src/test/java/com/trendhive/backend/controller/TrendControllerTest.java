@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -48,7 +49,7 @@ class TrendControllerTest {
         mockMvc.perform(post("/api/trends/add")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isUnauthorized());
+                .andExpect(status().isForbidden());
     }
 
     @Test
@@ -83,5 +84,37 @@ class TrendControllerTest {
 
         // 5️⃣ 실제 DB에 저장됐는지 확인
         assertThat(trendRepository.findAll()).hasSize(1);
+    }
+
+    @Test
+    @DisplayName("모든 트렌드 조회")
+    void getAllTrends_shouldReturnList() throws Exception {
+        // Given: 사용자 및 트렌드 2개 생성
+        User user = userRepository.save(User.builder()
+                .username("viewer")
+                .email("viewer@example.com")
+                .password("pw")
+                .build());
+
+        trendRepository.saveAll(java.util.List.of(
+                com.trendhive.backend.domain.Trend.builder()
+                        .title("트렌드1")
+                        .description("설명1")
+                        .category("카테고리1")
+                        .createdBy(user)
+                        .build(),
+                com.trendhive.backend.domain.Trend.builder()
+                        .title("트렌드2")
+                        .description("설명2")
+                        .category("카테고리2")
+                        .createdBy(user)
+                        .build()
+        ));
+
+        // When & Then
+        mockMvc.perform(get("/api/trends/all"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$[0].title").value("트렌드1"));
     }
 }

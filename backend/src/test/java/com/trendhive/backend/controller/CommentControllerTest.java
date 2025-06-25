@@ -65,7 +65,7 @@ class CommentControllerTest {
         mockMvc.perform(post("/api/comments/add")
                         .param("trendId", savedTrend.getId().toString())
                         .param("content", "댓글 내용"))
-                .andExpect(status().isUnauthorized());
+                .andExpect(status().isForbidden());
     }
 
     @Test
@@ -97,5 +97,28 @@ class CommentControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2))
                 .andExpect(jsonPath("$[0].content").value("댓글 1"));
+    }
+    @Test
+    @DisplayName("잘못된 JWT로 댓글 등록 시 401 Unauthorized")
+    void addComment_withInvalidToken_shouldFail() throws Exception {
+        String invalidToken = "Bearer invalid.jwt.token";
+
+        mockMvc.perform(post("/api/comments/add")
+                        .header("Authorization", invalidToken)
+                        .param("trendId", savedTrend.getId().toString())
+                        .param("content", "잘못된 토큰 댓글"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @DisplayName("빈 내용으로 댓글 등록 시 400 Bad Request")
+    void addComment_withEmptyContent_shouldFail() throws Exception {
+        String token = jwtUtil.generateToken(savedUser.getUsername());
+
+        mockMvc.perform(post("/api/comments/add")
+                        .header("Authorization", "Bearer " + token)
+                        .param("trendId", savedTrend.getId().toString())
+                        .param("content", ""))
+                .andExpect(status().isBadRequest());
     }
 }
