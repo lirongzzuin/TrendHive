@@ -1,6 +1,7 @@
 package com.trendhive.backend.dto;
 
 import lombok.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -11,5 +12,5 @@ public class UserResponseDTO {
     private Long id;
     private String username;
     private String email;
-    private String createdAt;
+    private LocalDateTime createdAt;
 }

@@ -25,7 +25,7 @@ public class UserController {
                                                         @RequestParam String password) {
         User user = userService.registerUser(username, email, password);
         UserResponseDTO responseDTO = new UserResponseDTO(
-                user.getId(), user.getUsername(), user.getEmail(), user.getCreatedAt().toString()
+                user.getId(), user.getUsername(), user.getEmail(), user.getCreatedAt()
         );
         return ResponseEntity.ok(responseDTO);
     }

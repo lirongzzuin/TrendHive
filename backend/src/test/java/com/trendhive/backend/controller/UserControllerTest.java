@@ -91,4 +91,59 @@ class UserControllerTest {
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$.error").value("Invalid credentials"));
     }
+
+    @Test
+    @DisplayName("존재하지 않는 사용자로 로그인 시 실패")
+    void loginUser_withNonexistentUser_shouldFail() throws Exception {
+        mockMvc.perform(post("/api/users/login")
+                        .param("username", "notexistuser")
+                        .param("password", "any"))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.error").value("Invalid credentials"));
+    }
+
+    @Test
+    @DisplayName("중복된 사용자 이름으로 회원가입 시 실패")
+    void registerUser_withDuplicateUsername_shouldFail() throws Exception {
+        mockMvc.perform(post("/api/users/register")
+                        .param("username", "dupuser")
+                        .param("email", "dup@example.com")
+                        .param("password", "pw"))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(post("/api/users/register")
+                        .param("username", "dupuser")
+                        .param("email", "another@example.com")
+                        .param("password", "pw"))
+                .andExpect(status().isBadRequest());
+    }
+    @Test
+    @DisplayName("빈 사용자 이름으로 회원가입 시 실패")
+    void registerUser_withEmptyUsername_shouldFail() throws Exception {
+        mockMvc.perform(post("/api/users/register")
+                        .param("username", "")
+                        .param("email", "empty@example.com")
+                        .param("password", "1234"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("유효하지 않은 이메일로 회원가입 시 실패")
+    void registerUser_withInvalidEmail_shouldFail() throws Exception {
+        mockMvc.perform(post("/api/users/register")
+                        .param("username", "invalidEmailUser")
+                        .param("email", "not-an-email")
+                        .param("password", "1234"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("너무 짧은 비밀번호로 회원가입 시 실패")
+    void registerUser_withShortPassword_shouldFail() throws Exception {
+        mockMvc.perform(post("/api/users/register")
+                        .param("username", "shortpw")
+                        .param("email", "shortpw@example.com")
+                        .param("password", "1"))
+                .andExpect(status().isBadRequest());
+    }
 }

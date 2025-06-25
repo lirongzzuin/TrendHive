@@ -18,6 +18,12 @@ public class UserService {
 
     @Transactional
     public User registerUser(String username, String email, String password) {
+        if (userRepository.findByUsername(username).isPresent()) {
+            throw new RuntimeException("Username already exists");
+        }
+        if (userRepository.findByEmail(email).isPresent()) {
+            throw new RuntimeException("Email already exists");
+        }
         User user = User.builder()
                 .username(username)
                 .email(email)

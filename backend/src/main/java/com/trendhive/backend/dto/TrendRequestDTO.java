@@ -12,4 +12,5 @@ public class TrendRequestDTO {
     private String description;
     private String category;
     private String createdBy;
+    private String sourceUrl;
 }

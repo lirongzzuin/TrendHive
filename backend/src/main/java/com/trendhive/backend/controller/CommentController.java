@@ -35,7 +35,7 @@ public class CommentController {
         User user = userService.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        Trend trend = trendService.findById(trendId)
+        Trend trend = trendService.findTrendEntityById(trendId)
                 .orElseThrow(() -> new RuntimeException("Trend not found"));
 
         Comment comment = commentService.addComment(user, trend, content);

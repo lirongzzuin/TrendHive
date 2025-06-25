@@ -20,6 +20,10 @@ public class Trend {
     private String description;
     private String category; // ✅ 추가
 
+    private String sourceUrl;
+    private int likeCount;
+    private int commentCount;
+
     @ManyToOne
     @JoinColumn(name = "created_by") // ✅ 추가
     private User createdBy;

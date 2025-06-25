@@ -115,6 +115,38 @@ class TrendControllerTest {
         mockMvc.perform(get("/api/trends/all"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2))
-                .andExpect(jsonPath("$[0].title").value("트렌드1"));
+                .andExpect(jsonPath("$[0].title").value("트렌드1"))
+                .andExpect(jsonPath("$[1].title").value("트렌드2"));
+    }
+
+    @Test
+    @DisplayName("트렌드 단건 조회 성공")
+    void getTrendById_shouldReturnTrend() throws Exception {
+        User user = userRepository.save(User.builder()
+                .username("reader")
+                .email("reader@example.com")
+                .password("pw")
+                .build());
+
+        com.trendhive.backend.domain.Trend trend = trendRepository.save(com.trendhive.backend.domain.Trend.builder()
+                .title("단건 트렌드")
+                .description("단건 설명")
+                .category("단건 카테고리")
+                .createdBy(user)
+                .build());
+
+        mockMvc.perform(get("/api/trends/" + trend.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title").value("단건 트렌드"))
+                .andExpect(jsonPath("$.description").value("단건 설명"))
+                .andExpect(jsonPath("$.category").value("단건 카테고리"))
+                .andExpect(jsonPath("$.createdBy").value("reader"));
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 트렌드 조회 시 404 반환")
+    void getTrendById_withInvalidId_shouldReturn404() throws Exception {
+        mockMvc.perform(get("/api/trends/9999"))
+                .andExpect(status().isNotFound());
     }
 }

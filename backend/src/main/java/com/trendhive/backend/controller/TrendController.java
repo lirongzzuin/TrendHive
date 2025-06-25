@@ -43,8 +43,10 @@ public class TrendController {
      * 🔹 모든 트렌드 조회 (공개 API)
      */
     @GetMapping
-    public ResponseEntity<List<TrendResponseDTO>> getAllTrends() {
-        return ResponseEntity.ok(trendService.getAllTrends());
+    public ResponseEntity<List<TrendResponseDTO>> getAllTrends(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return ResponseEntity.ok(trendService.getAllTrends(page, size));
     }
 
     @GetMapping("/{trendId}")

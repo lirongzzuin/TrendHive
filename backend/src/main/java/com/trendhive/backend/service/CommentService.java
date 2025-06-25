@@ -18,13 +18,14 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     @Transactional
-    public Comment addComment(User user, Trend trend, String content) {
+    public CommentResponseDTO addComment(User user, Trend trend, String content) {
         Comment comment = Comment.builder()
                 .user(user)
                 .trend(trend)
                 .content(content)
                 .build();
-        return commentRepository.save(comment);
+        Comment savedComment = commentRepository.save(comment);
+        return new CommentResponseDTO(savedComment);
     }
 
     public List<CommentResponseDTO> getCommentsByTrend(Trend trend) {

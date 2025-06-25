@@ -15,3 +15,15 @@
 /frontend/node_modules
 /frontend/.next
 /frontend/.env.local
+
+# 백엔드 환경변수
+/backend/.env
+/backend/.env.*
+
+# 테스트 리포트
+/backend/build/
+/backend/reports/
+
+# Windows 시스템 파일
+Thumbs.db
+ehthumbs.db

@@ -8,6 +8,8 @@ import com.trendhive.backend.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,18 +45,16 @@ public class TrendService {
     /**
      * 🔹 모든 트렌드 조회
      */
-    public List<TrendResponseDTO> getAllTrends() {
-        return trendRepository.findAll().stream()
+    public List<TrendResponseDTO> getAllTrends(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return trendRepository.findAll(pageable)
+                .stream()
                 .map(TrendResponseDTO::new)
                 .collect(Collectors.toList());
     }
 
     public Optional<TrendResponseDTO> getTrendById(Long id) {
         return trendRepository.findById(id).map(TrendResponseDTO::new); // 🔹 Trend → TrendResponseDTO 변환
-    }
-
-    public Optional<Trend> findTrendEntityById(Long id) {
-        return trendRepository.findById(id);
     }
 
     public Optional<Trend> findById(Long id) {

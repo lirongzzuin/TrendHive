@@ -11,11 +11,13 @@ public class CommentResponseDTO {
     private String content;
     private String author;
     private LocalDateTime createdAt;
+    private Long trendId;
 
     public CommentResponseDTO(Comment comment) {
         this.id = comment.getId();
         this.content = comment.getContent();
         this.author = comment.getUser().getUsername();
         this.createdAt = comment.getCreatedAt();
+        this.trendId = comment.getTrend().getId();
     }
 }

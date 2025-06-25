@@ -118,7 +118,8 @@ class CommentControllerTest {
         mockMvc.perform(post("/api/comments/add")
                         .header("Authorization", "Bearer " + token)
                         .param("trendId", savedTrend.getId().toString())
-                        .param("content", ""))
-                .andExpect(status().isBadRequest());
+                        .param("content", " "))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("댓글 내용은 필수입니다."));
     }
 }
