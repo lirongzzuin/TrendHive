@@ -27,19 +27,19 @@ public class CommentController {
      * 🔹 댓글 추가 (JWT 인증 필요)
      */
     @PostMapping("/add")
-    public ResponseEntity<Comment> addComment(@RequestHeader("Authorization") String token,
-                                              @RequestParam Long trendId,
-                                              @RequestParam String content) {
+    public ResponseEntity<CommentResponseDTO> addComment(@RequestHeader("Authorization") String token,
+                                                         @RequestParam Long trendId,
+                                                         @RequestParam String content) {
         String username = jwtUtil.extractUsername(token.replace("Bearer ", ""));
 
         User user = userService.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        Trend trend = trendService.findTrendEntityById(trendId)
+        Trend trend = trendService.findById(trendId)
                 .orElseThrow(() -> new RuntimeException("Trend not found"));
 
-        Comment comment = commentService.addComment(user, trend, content);
-        return ResponseEntity.ok(comment);
+        CommentResponseDTO commentDTO = commentService.addComment(user, trend, content);
+        return ResponseEntity.ok(commentDTO);
     }
 
 
@@ -48,7 +48,7 @@ public class CommentController {
      */
     @GetMapping("/{trendId}")
     public ResponseEntity<List<CommentResponseDTO>> getCommentsByTrend(@PathVariable Long trendId) {
-        Trend trend = trendService.findTrendEntityById(trendId)
+        Trend trend = trendService.findById(trendId)
                 .orElseThrow(() -> new RuntimeException("Trend not found"));
 
         List<CommentResponseDTO> comments = commentService.getCommentsByTrend(trend);

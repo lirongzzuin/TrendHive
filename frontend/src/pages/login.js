@@ -42,6 +42,12 @@ export default function Login() {
       <button className="bg-blue-500 text-white p-2 rounded" onClick={handleLogin}>
         로그인
       </button>
+      <p className="mt-2 text-sm">
+        아직 계정이 없으신가요?{" "}
+        <a href="/signup" className="text-blue-500 hover:underline">
+          회원가입
+        </a>
+      </p>
     </div>
   );
 }

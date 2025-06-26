@@ -28,8 +28,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             token = token.substring(7);
             if (jwtUtil.validateToken(token)) {
                 String username = jwtUtil.extractUsername(token);
+
+                // 권한이 필요하다면 여기서 Claims에서 roles를 꺼내서 설정할 수 있음
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(username, null, java.util.Collections.emptyList());
+
+                // SecurityContextHolder에 인증 객체 등록
+                // TODO: 인증 정보 설정 전 로그 출력 등 확장 포인트
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }

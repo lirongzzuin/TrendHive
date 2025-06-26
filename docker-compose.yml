@@ -1,4 +1,3 @@
-version: '3.8'
 
 services:
   mysql:
@@ -6,10 +5,8 @@ services:
     container_name: mysql-trendhive
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: yourpassword
+      MYSQL_ROOT_PASSWORD: trendhive
       MYSQL_DATABASE: trendhive
-      MYSQL_USER: trendhive_user
-      MYSQL_PASSWORD: yourpassword
     ports:
       - "3306:3306"
     volumes:
@@ -23,6 +20,19 @@ services:
     restart: always
     ports:
       - "6379:6379"
+    networks:
+      - trendhive-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin-trendhive
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: trendhive
     networks:
       - trendhive-network
 

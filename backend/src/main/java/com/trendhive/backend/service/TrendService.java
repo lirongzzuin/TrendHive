@@ -25,7 +25,7 @@ public class TrendService {
      * 🔹 트렌드 추가 (JWT 인증된 사용자)
      */
     @Transactional
-    public TrendResponseDTO addTrend(String title, String description, String category, String createdByUsername) {
+    public TrendResponseDTO addTrend(String title, String description, String category, String sourceUrl, String createdByUsername) {
         // 1️⃣ JWT에서 추출한 username으로 User 조회
         User user = userRepository.findByUsername(createdByUsername)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -35,6 +35,9 @@ public class TrendService {
                 .title(title)
                 .description(description)
                 .category(category)
+                .sourceUrl(sourceUrl)
+                .likeCount(0)
+                .commentCount(0)
                 .createdBy(user)
                 .build();
 

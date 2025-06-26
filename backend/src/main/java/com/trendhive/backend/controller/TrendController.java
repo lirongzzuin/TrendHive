@@ -34,6 +34,7 @@ public class TrendController {
                 requestDTO.getTitle(),
                 requestDTO.getDescription(),
                 requestDTO.getCategory(),
+                requestDTO.getSourceUrl(),
                 username // `createdBy`를 JWT에서 추출한 `username`으로 설정
         );
         return ResponseEntity.ok(response);
