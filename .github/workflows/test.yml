@@ -16,6 +16,8 @@ jobs:
         env:
           MYSQL_DATABASE: testdb
           MYSQL_ROOT_PASSWORD: password
+          MYSQL_USER: user
+          MYSQL_PASSWORD: password
         options: >-
           --health-cmd="mysqladmin ping --silent"
           --health-interval=10s
@@ -44,5 +46,5 @@ jobs:
         run: cd backend && ./gradlew clean test
         env:
           SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/testdb
-          SPRING_DATASOURCE_USERNAME: root
+          SPRING_DATASOURCE_USERNAME: user
           SPRING_DATASOURCE_PASSWORD: password
