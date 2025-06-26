@@ -1,14 +1,14 @@
 # TrendHive
 
 TrendHive는 실시간 트렌드 분석 및 토론을 위한 플랫폼입니다.  
-사용자는 최신 트렌드를 탐색하고 이에 대한 의견을 자유롭게 공유할 수 있습니다.
+사용자는 최신 트렌드를 탐색하고 자유롭게 의견을 공유할 수 있습니다.
 
 ---
 
 ## 프로젝트 개요
 
 - 프로젝트명: **TrendHive**
-- 목적: 실시간 트렌드 정보를 수집·공유하고, 사용자 간 토론을 지원하는 커뮤니티 플랫폼 구축
+- 목적: 실시간 트렌드 정보를 수집·공유하고 사용자 간 토론을 지원하는 커뮤니티 플랫폼 구축
 - 기술 스택:
   - 백엔드: Spring Boot, JPA, MySQL, Redis, Kafka
   - 프론트엔드: Next.js, TypeScript, Tailwind CSS
@@ -18,6 +18,7 @@ TrendHive는 실시간 트렌드 분석 및 토론을 위한 플랫폼입니다.
   - JWT 기반 사용자 인증
   - 트렌드 등록 및 댓글 작성
   - 인기 트렌드 추천 시스템
+  - Swagger를 활용한 API 문서 자동 생성 및 UI 제공
 
 ---
 
@@ -39,11 +40,14 @@ TrendHive/
 │
 ├── frontend/                
 │   ├── src/
+│   │   ├── app/
+│   │   ├── pages/
+│   │   │   ├── trend/
+│   │   │   │   └── [id].js
 │   │   ├── components/      
-│   │   ├── pages/           
 │   │   ├── hooks/           
 │   │   ├── services/        
-│   │   ├── styles/          
+│   │   ├── styles/
 │
 ├── docker-compose.yml        
 ├── README.md                 
@@ -67,7 +71,7 @@ npm install
 npm run dev
 ```
 
-### Docker 실행 (MySQL & Redis 포함)
+### Docker 실행 (MySQL 및 Redis 포함)
 ```bash
 docker-compose up -d
 ```
@@ -80,7 +84,7 @@ docker-compose up -d
 
 - 테스트 프로파일: `application-test.properties`
 - DB: H2 (자동 생성 및 삭제)
-- 프레임워크: Spring Boot Test + MockMvc + JUnit 5
+- 프레임워크: Spring Boot Test, MockMvc, JUnit 5
 - 주요 테스트 대상:
   - `UserController`: 회원가입, 로그인 및 JWT 발급
   - `TrendController`: 인증 기반 트렌드 등록
@@ -150,5 +154,5 @@ git push origin main
 
 ## 개발자 정보
 
-- 개발자: @lirongzzuin
+- 개발자: @lirongzzuin  
 - 이메일: younggyun12@hotmail.com
