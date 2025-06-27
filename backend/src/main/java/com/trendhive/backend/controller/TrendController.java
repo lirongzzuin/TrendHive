@@ -18,7 +18,7 @@ public class TrendController {
     private final JwtUtil jwtUtil;
 
     /**
-     * 🔹 트렌드 추가 (JWT 인증 필요)
+     * 트렌드 추가 (JWT 인증 필요)
      */
     @PostMapping("/add")
     public ResponseEntity<TrendResponseDTO> addTrend(
@@ -41,7 +41,7 @@ public class TrendController {
     }
 
     /**
-     * 🔹 모든 트렌드 조회 (공개 API)
+     * 모든 트렌드 조회 (공개 API)
      */
     @GetMapping
     public ResponseEntity<List<TrendResponseDTO>> getAllTrends(

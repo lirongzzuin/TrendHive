@@ -24,7 +24,7 @@ public class CommentController {
     private final JwtUtil jwtUtil;
 
     /**
-     * 🔹 댓글 추가 (JWT 인증 필요)
+     * 댓글 추가 (JWT 인증 필요)
      */
     @PostMapping("/add")
     public ResponseEntity<CommentResponseDTO> addComment(@RequestHeader("Authorization") String token,
@@ -44,7 +44,7 @@ public class CommentController {
 
 
     /**
-     * 🔹 특정 트렌드의 댓글 조회
+     * 특정 트렌드의 댓글 조회
      */
     @GetMapping("/{trendId}")
     public ResponseEntity<List<CommentResponseDTO>> getCommentsByTrend(@PathVariable Long trendId) {

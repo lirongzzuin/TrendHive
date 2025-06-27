@@ -22,7 +22,7 @@ public class TrendService {
     private final UserRepository userRepository;
 
     /**
-     * 🔹 트렌드 추가 (JWT 인증된 사용자)
+     * 트렌드 추가 (JWT 인증된 사용자)
      */
     @Transactional
     public TrendResponseDTO addTrend(String title, String description, String category, String sourceUrl, String createdByUsername) {
@@ -46,7 +46,7 @@ public class TrendService {
     }
 
     /**
-     * 🔹 모든 트렌드 조회
+     * 모든 트렌드 조회
      */
     public List<TrendResponseDTO> getAllTrends(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);

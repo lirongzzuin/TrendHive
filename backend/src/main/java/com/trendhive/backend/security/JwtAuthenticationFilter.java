@@ -34,7 +34,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         new UsernamePasswordAuthenticationToken(username, null, java.util.Collections.emptyList());
 
                 // SecurityContextHolder에 인증 객체 등록
-                // TODO: 인증 정보 설정 전 로그 출력 등 확장 포인트
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
