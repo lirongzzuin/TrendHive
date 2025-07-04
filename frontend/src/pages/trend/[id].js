@@ -37,20 +37,32 @@ export default function TrendDetailPage() {
   }, [id])
 
   const handleAddComment = async () => {
-    if (!newComment.trim()) return
+    if (!newComment.trim()) return;
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('로그인이 필요합니다.');
+      return;
+    }
     const res = await fetch(`/api/comments`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ trendId: id, content: newComment }),
     })
     if (res.ok) {
       setNewComment('');
       fetch(`/api/trends/${id}/comments`)
-        .then(res => res.json())
-        .then(data => setComments(data));
+        .then(res => {
+          if (!res.ok) throw new Error('댓글 다시 불러오기 실패');
+          return res.json();
+        })
+        .then(data => setComments(data))
+        .catch(err => {
+          console.error(err);
+          alert('댓글 목록을 다시 불러오는 데 실패했습니다.');
+        });
     }
   }
 
@@ -78,12 +90,15 @@ export default function TrendDetailPage() {
         ))}
       </div>
       <div style={{ marginTop: '1rem' }}>
+        <label htmlFor="newComment" style={{ display: 'block', marginBottom: '0.5rem' }}>댓글 작성</label>
         <textarea
+          id="newComment"
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
           rows={3}
           style={{ width: '100%', padding: '0.5rem' }}
           placeholder="댓글을 입력하세요"
+          required
         />
         <button onClick={handleAddComment} style={{ marginTop: '0.5rem' }}>댓글 등록</button>
       </div>
